@@ -14,4 +14,3 @@ while True:
         print(f"Wilgotność: {weather['wilgotność']} %")
         print(f"Ciśnienie: {weather['ciśnienie']} hPa")
         print(f"Wiatr: {weather['wiatr']} m/s")
-        time.sleep(60)
