@@ -9,6 +9,8 @@ idea
 .env
 /env
 env
-
+/Examples
+.Testy
+Examples
 __pycache__
 __pycache__/
