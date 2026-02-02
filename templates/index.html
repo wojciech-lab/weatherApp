@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strona główna</title>
+
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#111827;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(34,197,94,.20), transparent 55%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px;
+    }
+
+    .wrap{
+      width: min(980px, 100%);
+    }
+
+    header.hero{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 18px 28px;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding: 28px 28px 18px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+
+    header.hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(500px 220px at 20% 0%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(420px 240px at 80% 10%, rgba(34,197,94,.22), transparent 60%);
+      filter: blur(8px);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .hero > *{ position: relative; z-index: 1; }
+
+    h1{
+      margin:0;
+      font-size: clamp(28px, 4.2vw, 44px);
+      letter-spacing: .2px;
+      line-height: 1.1;
+    }
+
+    h2{
+      margin: 6px 0 0;
+      font-weight: 600;
+      font-size: clamp(15px, 2.2vw, 18px);
+      color: var(--muted);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+    .badge strong{
+      color: var(--text);
+      font-weight: 700;
+    }
+    .dot{
+      width:10px; height:10px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--accent), #a78bfa);
+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
+    }
+
+    main.grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+    }
+
+    .card{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      overflow:hidden;
+    }
+
+    .card-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin:0 0 14px;
+    }
+
+    .card-title h3{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Lista miast */
+    ul.cities{
+      list-style: none;
+      padding:0;
+      margin: 14px 0 0;
+      display:grid;
+      gap: 10px;
+    }
+
+    .city{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .city:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,58,237,.35);
+      background: rgba(0,0,0,.26);
+    }
+    .pin{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(34,197,94,.20));
+      border: 1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+    }
+    .pin svg{ opacity:.9; }
+    .city p{
+      margin:0;
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+
+    /* Panel logowania/admina */
+    .panel{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      height: 100%;
+    }
+
+    .admin{
+      display:flex;
+      align-items:flex-start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(34,197,94,.35);
+      background: rgba(34,197,94,.10);
+    }
+    .admin h2{
+      margin:0;
+      color: rgba(255,255,255,.92);
+      font-size: 18px;
+    }
+    .admin small{
+      display:block;
+      margin-top: 4px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .admin .ok{
+      width: 34px; height:34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg, rgba(34,197,94,.35), rgba(34,197,94,.15));
+      border: 1px solid rgba(34,197,94,.35);
+      flex: 0 0 auto;
+    }
+
+    button{
+      border: 0;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      box-shadow: 0 14px 30px rgba(124,58,237,.25);
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+      width: 100%;
+    }
+    button:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 18px 40px rgba(124,58,237,.34);
+    }
+    button:active{
+      transform: translateY(0px);
+      filter: brightness(0.98);
+    }
+
+    footer{
+      margin-top: 14px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Responsywność */
+    @media (max-width: 860px){
+      main.grid{ grid-template-columns: 1fr; }
+      header.hero{ align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <h1>Strona główna</h1>
+        <h2>Podtytuł</h2>
+      </div>
+
+      <div class="badge" aria-label="Stopka prawna">
+        <span class="dot" aria-hidden="true"></span>
+        <strong>{{ rok }} wszelkie prawa</strong>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <div class="card-title">
+          <h3>Miasta</h3>
+          <p class="sub">Lista renderowana z Twojej pętli w szablonie.</p>
+        </div>
+
+        <ul class="cities">
+          {% for miasto in miasto %}
+            <li class="city">
+              <span class="pin" aria-hidden="true">
+                <!-- prosta ikonka pinezki (SVG) -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 22s7-5.2 7-12a7 7 0 10-14 0c0 6.8 7 12 7 12z" stroke="white" stroke-width="1.6"/>
+                  <path d="M12 13.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4z" stroke="white" stroke-width="1.6"/>
+                </svg>
+              </span>
+              <p>{{ miasto }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <aside class="card panel">
+        <div>
+          <div class="card-title">
+            <h3>Konto</h3>
+          </div>
+          <p class="sub">Wyświetlamy różne treści w zależności od wartości <code>admin</code>.</p>
+        </div>
+
+        {% if admin %}
+          <div class="admin">
+            <div class="ok" aria-hidden="true">✓</div>
+            <div>
+              <h2>Witaj adminie</h2>
+              <small>Masz dostęp do funkcji administracyjnych.</small>
+            </div>
+          </div>
+        {% else %}
+          <button type="button">Zaloguj się</button>
+        {% endif %}
+
+        <footer>
+          © {{ rok }} • Wszelkie prawa zastrzeżone
+        </footer>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>
